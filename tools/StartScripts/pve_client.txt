@@ -1,0 +1,20 @@
+// ============================================================================
+// pve_client.txt -- minimal "join by IP" script for a player connecting to a
+// host running pve_host.txt (Windows direct host or Linux spring-dedicated).
+// ----------------------------------------------------------------------------
+// Launch it with the SAME engine version + the SAME game (.sdd, same commit) as
+// the host. The host's pve_host.txt already holds the authoritative match
+// definition (teams, AI, mission), so the client only needs connection info.
+//
+//   MyPlayerName MUST exactly match one of the player names in pve_host.txt
+//   (<HOST_NAME> or <FRIEND_NAME>), otherwise the server won't seat you.
+//
+// See MULTIPLAYER.md (sections 3C / 4) for the exact launch command.
+// ============================================================================
+[GAME]
+{
+	HostIP       = <HOST_IP>;     // host's PUBLIC ip for internet; LAN ip for a LAN test
+	HostPort     = <PORT>;        // must match pve_host.txt hostport (e.g. 8452, UDP)
+	MyPlayerName = <YOUR_NAME>;   // must equal a player name defined in pve_host.txt
+	IsHost       = 0;
+}
