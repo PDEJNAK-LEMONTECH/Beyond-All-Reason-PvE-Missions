@@ -24,6 +24,9 @@ local triggerTypes = {
 	TeamDestroyed = 23,
 	Victory = 24,
 	Defeat = 25,
+	-- Added for the private scripted-PvE mod:
+	TechLevelReached = 26,
+	ArmyValueExceeded = 27,
 }
 
 local parameters = {
@@ -43,26 +46,58 @@ local parameters = {
 	[triggerTypes.UnitNotExists] = {  },
 	[triggerTypes.ConstructionStarted] = {  },
 	[triggerTypes.ConstructionFinished] = {  },
-	[triggerTypes.UnitKilled] = {  },
+	[triggerTypes.UnitKilled] = {
+		[1] = { name = 'unitName',      required = false, type = 'string' },  -- tracked name from SpawnUnits/Setup
+		[2] = { name = 'team',          required = false, type = 'string' },  -- team role, e.g. "enemies"
+		[3] = { name = 'onlyCommander', required = false, type = 'boolean' }, -- match only iscommander units
+	},
 	[triggerTypes.UnitCaptured] = {  },
 	[triggerTypes.UnitResurrected] = {  },
-	[triggerTypes.UnitEnteredLocation] = {  },
-	[triggerTypes.UnitLeftLocation] = {  },
+	[triggerTypes.UnitEnteredLocation] = {
+		[1] = { name = 'team',          required = false, type = 'string' },  -- team role whose units count, e.g. "humans"
+		[2] = { name = 'onlyCommander', required = false, type = 'boolean' }, -- only trigger on commander units
+		[3] = { name = 'x',             required = true,  type = 'number' },
+		[4] = { name = 'z',             required = true,  type = 'number' },
+		[5] = { name = 'radius',        required = true,  type = 'number' },
+	},
+	[triggerTypes.UnitLeftLocation] = {
+		[1] = { name = 'team',          required = false, type = 'string' },
+		[2] = { name = 'onlyCommander', required = false, type = 'boolean' },
+		[3] = { name = 'x',             required = true,  type = 'number' },
+		[4] = { name = 'z',             required = true,  type = 'number' },
+		[5] = { name = 'radius',        required = true,  type = 'number' },
+	},
 	[triggerTypes.UnitDwellLocation] = {  },
 	[triggerTypes.UnitSpotted] = {  },
 	[triggerTypes.UnitUnspotted] = {  },
 	[triggerTypes.FeatureNotExists] = {  },
 	[triggerTypes.FeatureReclaimed] = {  },
 	[triggerTypes.FeatureDestroyed] = {  },
-	[triggerTypes.ResourceStored] = {  },
+	[triggerTypes.ResourceStored] = {
+		[1] = { name = 'team',     required = false, type = 'string' },  -- role; fires if ANY team in it qualifies
+		[2] = { name = 'resource', required = true,  type = 'string' },  -- "metal" or "energy"
+		[3] = { name = 'amount',   required = true,  type = 'number' },  -- current stored >= amount
+	},
 	[triggerTypes.ResourceProduction] = {  },
 	[triggerTypes.TotalUnitsLost] = {  },
 	[triggerTypes.TotalUnitsBuilt] = {  },
 	[triggerTypes.TotalUnitsKilled] = {  },
 	[triggerTypes.TotalUnitsCaptured] = {  },
-	[triggerTypes.TeamDestroyed] = {  },
+	[triggerTypes.TeamDestroyed] = {
+		[1] = { name = 'team', required = true, type = 'string' },  -- role; fires when it has had units and now has none
+	},
 	[triggerTypes.Victory] = {  },
 	[triggerTypes.Defeat] = {  },
+
+	-- Added for the private scripted-PvE mod:
+	[triggerTypes.TechLevelReached] = {
+		[1] = { name = 'team',      required = false, type = 'string' },  -- team role, e.g. "humans"
+		[2] = { name = 'techLevel', required = false, type = 'number' },  -- defaults to 2 in detection code
+	},
+	[triggerTypes.ArmyValueExceeded] = {
+		[1] = { name = 'team',  required = false, type = 'string' },      -- team role, e.g. "humans"
+		[2] = { name = 'value', required = true,  type = 'number' },      -- total metalCost threshold
+	},
 }
 
 return {

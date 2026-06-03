@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BAR Scenario Designer</title>
+<link rel="stylesheet" href="designer.css">
+<script>
+/* surface any error on-screen instead of failing silently */
+window.__err = function(msg){
+  var d=document.getElementById('errbar');
+  if(!d){ d=document.createElement('div'); d.id='errbar';
+    d.style.cssText='position:fixed;z-index:99999;left:0;right:0;top:0;max-height:50vh;overflow:auto;background:#e5484d;color:#fff;font:12px/1.5 ui-monospace,Consolas,monospace;padding:12px 16px;white-space:pre-wrap;box-shadow:0 4px 16px #0008';
+    (document.body||document.documentElement).appendChild(d); }
+  d.textContent='⚠ Designer error (please send me this):\n\n'+msg;
+};
+window.addEventListener('error',function(e){ window.__err((e.error&&e.error.stack)||e.message||'unknown error'); });
+window.addEventListener('unhandledrejection',function(e){ window.__err('promise rejection: '+((e.reason&&e.reason.stack)||e.reason)); });
+</script>
+</head>
+<body>
+
+<!-- ===================== Launch / map picker ===================== -->
+<div id="launch" class="launch">
+  <div class="launch-inner">
+    <header class="launch-head">
+      <h1>BAR Scenario Designer</h1>
+      <p class="sub">Visual planner for scripted-PvE Mission API scenarios. Pick a map to start, or open an existing scenario.</p>
+    </header>
+    <div class="launch-tools">
+      <input id="mapSearch" type="search" placeholder="Search maps&hellip;" autocomplete="off">
+      <span id="mapCount" class="muted"></span>
+      <span class="spacer"></span>
+      <button id="btnOpenExisting" class="btn">Open existing scenario&hellip;</button>
+    </div>
+    <div id="mapGrid" class="map-grid"></div>
+    <p id="noData" class="warn" hidden>
+      <strong>data.js not found or empty.</strong> Run <code>prepare_assets.ps1</code> first to generate map thumbnails and the unit list.
+    </p>
+  </div>
+</div>
+
+<!-- ===================== Main application ===================== -->
+<div id="app" class="app" hidden>
+  <!-- top bar -->
+  <header class="topbar">
+    <div class="brand">BAR Scenario Designer</div>
+    <div class="map-label"><span id="curMapName"></span> <span id="curMapDims" class="muted"></span></div>
+    <div class="spacer"></div>
+    <button id="btnNew"        class="btn">New</button>
+    <button id="btnOpen"       class="btn">Open&hellip;</button>
+    <button id="btnTestPlay" class="btn btn-go" title="Write the mission and launch the game (needs serve.ps1)">▶ Test play</button>
+    <label id="lblInfLos" class="los-toggle" title="Debug only: give human players infinite line-of-sight (whole map revealed) for faster scenario testing. Applies to Test play / downloaded start scripts."><input type="checkbox" id="chkInfLos"> Inf LOS</label>
+    <button id="btnSaveMission" class="btn btn-primary">Save mission .lua</button>
+    <button id="btnSaveScenario" class="btn">Export scenario menu</button>
+    <button id="btnStartScript" class="btn" title="Download a ready-to-run engine start script">⬇ Start script</button>
+    <button id="btnChangeMap"  class="btn">Change map</button>
+    <button id="btnLog" class="btn" title="Download diagnostic log (Ctrl+Shift+L)">🐞 Log</button>
+  </header>
+
+  <!-- toolbar (placement tools) -->
+  <div class="toolbar" id="toolbar">
+    <button class="tool" data-tool="select"   title="Select / move (V)"><span>↖</span>Select</button>
+    <button class="tool" data-tool="player"   title="Place the player start (1)"><span>🏠</span>Player start</button>
+    <button class="tool" data-tool="ai"        title="Place an AI spawn point (2)"><span>🚩</span>AI spawn</button>
+    <button class="tool" data-tool="building" title="Place an AI base building (3)"><span>🏗</span>Building</button>
+    <button class="tool" data-tool="zone"     title="Draw a trigger area (4)"><span>◯</span>Trigger area</button>
+    <button class="tool" data-tool="barrier"  title="Draw a barrier line (5)"><span>▦</span>Barrier</button>
+    <button class="tool" data-tool="spawn"    title="Place a unit-spawn point (6)"><span>✦</span>Spawn point</button>
+    <span class="tool-hint" id="toolHint"></span>
+  </div>
+
+  <div class="workspace">
+    <!-- left sidebar -->
+    <aside class="sidebar left" id="leftbar">
+      <section class="panel" id="panelBuild">
+        <h2>Placement</h2>
+        <div class="cur-unit">
+          <div class="cur-icon" id="curUnitIcon"></div>
+          <div class="cur-meta">
+            <div id="curUnitName" class="cur-name">(no unit selected)</div>
+            <div id="curUnitDef" class="cur-def"></div>
+          </div>
+        </div>
+        <div class="catbtns" id="placeCatBtns">
+          <button class="catbtn" data-fac="Armada" data-b="0">Armada Units</button>
+          <button class="catbtn" data-fac="Armada" data-b="1">Armada Buildings</button>
+          <button class="catbtn" data-fac="Cortex" data-b="0">Cortex Units</button>
+          <button class="catbtn" data-fac="Cortex" data-b="1">Cortex Buildings</button>
+          <button class="catbtn" data-fac="Legion" data-b="0">Legion Units</button>
+          <button class="catbtn" data-fac="Legion" data-b="1">Legion Buildings</button>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Owner</label>
+            <select id="buildRole"></select>
+          </div>
+          <div class="field">
+            <label>Facing</label>
+            <select id="buildFacing">
+              <option value="">(default)</option>
+              <option value="south">south</option>
+              <option value="north">north</option>
+              <option value="east">east</option>
+              <option value="west">west</option>
+            </select>
+          </div>
+        </div>
+        <p class="hint">Pick a unit from a category, then use the <b>Building</b> tool to click-place it. The same unit is used by the <b>Spawn point</b> and <b>Barrier</b> tools.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Scenario</h2>
+        <div class="field"><label>Title</label><input id="metaTitle"></div>
+        <div class="field"><label>Author</label><input id="metaAuthor"></div>
+        <div class="field"><label>Summary</label><textarea id="metaSummary" rows="2"></textarea></div>
+        <div class="field"><label>Briefing</label><textarea id="metaBriefing" rows="4"></textarea></div>
+        <div class="field"><label>Default difficulty</label>
+          <select id="metaDifficulty"><option>easy</option><option selected>normal</option><option>hard</option></select>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Setup &mdash; enemies</h2>
+        <div class="field">
+          <label>AI enemies count</label>
+          <input id="aiCount" type="number" min="1" max="8" step="1" value="1">
+          <p class="hint">Sets the number of AI spawn points and AI teams in the exported scenario. Each AI gets a role <code>ai1</code>, <code>ai2</code>&hellip;</p>
+        </div>
+        <label class="sub-label">Frozen at start</label>
+        <div id="freezeList" class="chip-list"></div>
+        <p class="hint">Frozen roles start dormant (paralyzed + neutral) until an <code>UnfreezeTeam</code> action wakes them.</p>
+      </section>
+    </aside>
+
+    <!-- canvas -->
+    <main class="stage">
+      <canvas id="canvas"></canvas>
+      <div class="stage-overlay">
+        <div class="readout" id="readout">x: &mdash;, z: &mdash;</div>
+        <div class="zoomctl">
+          <button id="zoomOut" class="btn btn-sm">&minus;</button>
+          <button id="zoomFit" class="btn btn-sm">Fit</button>
+          <button id="zoomIn"  class="btn btn-sm">+</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- right inspector + object lists -->
+    <aside class="sidebar right">
+      <section class="panel" id="inspector">
+        <h2>Inspector</h2>
+        <div id="inspectorBody"><p class="hint">Select something on the map, or add a trigger/action below.</p></div>
+      </section>
+
+      <section class="panel">
+        <h2>Triggers <button id="btnAddTrigger" class="btn btn-sm right">+ add</button></h2>
+        <ul id="triggerList" class="entity-list"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Actions <button id="btnAddAction" class="btn btn-sm right">+ add</button></h2>
+        <ul id="actionList" class="entity-list"></ul>
+      </section>
+    </aside>
+  </div>
+</div>
+
+<!-- ===================== Unit picker modal ===================== -->
+<div id="unitModal" class="modal" hidden>
+  <div class="modal-card">
+    <header class="modal-head">
+      <h3>Pick a unit</h3>
+      <button class="modal-close" data-close>&times;</button>
+    </header>
+    <div class="modal-tools">
+      <input id="unitSearch" type="search" placeholder="Search units&hellip;" autocomplete="off">
+      <div class="catbtns inline" id="unitCatBtns"></div>
+    </div>
+    <div id="unitGrid" class="unit-grid"></div>
+  </div>
+</div>
+
+<!-- generic small modal for add-trigger / add-action / prompts -->
+<div id="genericModal" class="modal" hidden>
+  <div class="modal-card sm">
+    <header class="modal-head"><h3 id="gmTitle"></h3><button class="modal-close" data-close>&times;</button></header>
+    <div id="gmBody" class="modal-body"></div>
+    <footer class="modal-foot"><button id="gmCancel" class="btn">Cancel</button><button id="gmOk" class="btn btn-primary">OK</button></footer>
+  </div>
+</div>
+
+<input id="fileInput" type="file" accept=".lua" hidden>
+
+<!-- shared datalists -->
+<datalist id="dlTeams">
+  <option value="humans"><option value="players"><option value="enemies"><option value="aiteam">
+  <option value="human1"><option value="human2"><option value="enemy1"><option value="enemy2">
+  <option value="ai1"><option value="ai2">
+</datalist>
+
+<script src="data.js"></script>
+<script src="designer.js"></script>
+</body>
+</html>

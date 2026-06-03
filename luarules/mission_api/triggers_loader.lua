@@ -32,7 +32,7 @@ local function prevalidateTriggers()
 			Spring.Log('triggers_loader.lua', LOG.ERROR, "[Mission API] Trigger has no actions: " .. triggerId)
 		end
 
-		for _, parameter in pairs(parameters[trigger.type]) do
+		for _, parameter in pairs(parameters[trigger.type] or {}) do
 			local value = trigger.parameters[parameter.name]
 			local type = type(value)
 
@@ -55,7 +55,9 @@ local function preprocessRawTriggers(rawTriggers)
 		settings.maxRepeats = settings.maxRepeats or nil
 		settings.difficulties = settings.difficulties or nil
 		settings.coop = settings.coop or false
-		settings.active = settings.active or true
+		-- NOTE: `x or true` is always true, so a trigger could never start inactive.
+		-- Use an explicit nil-check so prerequisite-gated triggers can begin disabled.
+		if settings.active == nil then settings.active = true end
 
 		rawTrigger.settings = settings
 		rawTrigger.triggered = false

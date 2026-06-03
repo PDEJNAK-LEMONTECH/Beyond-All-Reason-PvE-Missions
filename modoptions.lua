@@ -2516,4 +2516,48 @@ for i = 1, 9 do
     }
 end
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- PvE Scenario (Mission API) options -- added for private scripted-PvE mod
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+options[#options + 1] = {
+    key     = "pve_scenario_options",
+    name    = "PvE Scenario",
+    desc    = "Scripted PvE scenarios driven by the Mission API.",
+    type    = "section",
+    weight  = 3,
+}
+
+options[#options + 1] = {
+    key     = "mission_path",
+    name    = "Scenario script",
+    desc    = "Path (relative to the game's singleplayer/ folder) of the scenario script to run, e.g. missions/pve_demo.lua. Leave empty to disable the Mission API entirely.",
+    type    = "string",
+    def     = "",
+    maxlen  = 255,
+    section = "pve_scenario_options",
+}
+
+options[#options + 1] = {
+    key     = "mission_difficulty",
+    name    = "Scenario difficulty",
+    desc    = "Difficulty key passed to the scenario; scenarios may gate triggers per difficulty.",
+    type    = "list",
+    def     = "normal",
+    section = "pve_scenario_options",
+    items   = {
+        { key = "easy",   name = "Easy",   desc = "Easy" },
+        { key = "normal", name = "Normal", desc = "Normal" },
+        { key = "hard",   name = "Hard",   desc = "Hard" },
+    },
+}
+
+options[#options + 1] = {
+    key     = "mission_debug_los",
+    name    = "Debug: infinite LOS",
+    desc    = "Debug/testing only: reveal the whole map (global line-of-sight) for the human side, for faster scenario evaluation. Has no effect outside scenarios.",
+    type    = "bool",
+    def     = false,
+    section = "pve_scenario_options",
+}
+
 return options

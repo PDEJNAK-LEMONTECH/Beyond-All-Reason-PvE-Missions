@@ -18,7 +18,7 @@ local function prevalidateActions()
 			Spring.Log('actions_loader.lua', LOG.ERROR, "[Mission API] Action missing type: " .. actionId)
 		end
 
-		for _, parameter in pairs(parameters[action.type]) do
+		for _, parameter in pairs(parameters[action.type] or {}) do
 			local value = action.parameters[parameter.name]
 			local type = type(value)
 

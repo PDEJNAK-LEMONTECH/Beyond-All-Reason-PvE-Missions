@@ -1,0 +1,5 @@
+# Generated locally by prepare_assets.ps1 (host-specific — depends on which maps/
+# units you have installed). Regenerate after cloning; never commit these.
+/data.js
+/maps/
+/icons/

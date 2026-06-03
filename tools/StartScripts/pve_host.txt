@@ -1,0 +1,96 @@
+// ============================================================================
+// pve_host.txt -- start script for hosting the scripted-PvE demo (2 humans vs AI)
+// ----------------------------------------------------------------------------
+// Replace the <PLACEHOLDERS> before use. See MULTIPLAYER_HOST.md for how to run
+// this with the dedicated engine on Linux and how your friend connects.
+//
+//   allyTeam0 = humans  (team0 = host, team1 = friend)
+//   allyTeam1 = enemies (team2 = BARb AI, hosted by the host)
+//
+// IMPORTANT: `gametype` MUST be the exact name of YOUR dev game. Launch a normal
+// dev skirmish once, then copy the `gametype = ...;` line out of
+//   <install>/data/_script.txt
+// and paste it below (a published version string will NOT load your local .sdd).
+// ============================================================================
+[Game]
+{
+	[modoptions]
+	{
+		mission_path = missions/pve_demo.lua;
+		mission_difficulty = normal;
+	}
+
+	[allyTeam0]
+	{
+		numallies = 0;
+	}
+
+	[allyTeam1]
+	{
+		numallies = 0;
+	}
+
+	[team0]
+	{
+		TeamLeader = 0;
+		AllyTeam = 0;
+		Side = Armada;
+		RgbColor = 0 0.5 1;
+	}
+
+	[team1]
+	{
+		TeamLeader = 1;
+		AllyTeam = 0;
+		Side = Armada;
+		RgbColor = 0 1 0.5;
+	}
+
+	[team2]
+	{
+		TeamLeader = 0;
+		AllyTeam = 1;
+		Side = Cortex;
+		RgbColor = 1 0.2 0.2;
+	}
+
+	[ai0]
+	{
+		Host = 0;            // hosted by player on team0 (the host)
+		IsFromDemo = 0;
+		Name = BARbarianAI(1);
+		ShortName = BARb;
+		Team = 2;
+		Version = stable;
+	}
+
+	[player0]
+	{
+		Name = <HOST_NAME>;
+		Team = 0;
+		rank = 0;
+		IsFromDemo = 0;
+	}
+
+	[player1]
+	{
+		Name = <FRIEND_NAME>;
+		Team = 1;
+		rank = 0;
+		IsFromDemo = 0;
+	}
+
+	hostip = 0.0.0.0;        // bind all interfaces; friend connects to your public IP
+	hostport = <PORT>;       // e.g. 8452 (UDP) -- must be port-forwarded to this machine
+	ishost = 1;
+	myplayername = <HOST_NAME>;
+
+	numplayers = 2;
+	numusers = 2;
+	startpostype = 2;        // 2 = players choose start positions in-game
+
+	mapname = <MAP_NAME>;            // e.g. Supreme Crossing V1
+	gametype = <DEV_GAMETYPE>;       // copy from <install>/data/_script.txt (see header)
+	GameStartDelay = 5;
+	nohelperais = 0;
+}

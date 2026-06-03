@@ -7,7 +7,7 @@ local actions = GG['MissionAPI'].Actions
 local typeMapping = {
 	[types.EnableTrigger] = actionFunctions.EnableTrigger,
 	[types.DisableTrigger] = actionFunctions.DisableTrigger,
-	-- [types.IssueOrders] = ,
+	[types.IssueOrders] = actionFunctions.IssueOrders,
 	-- [types.AllowCommands] = ,
 	-- [types.RestrictCommands] = ,
 	-- [types.AlterBuildlist] = ,
@@ -27,8 +27,15 @@ local typeMapping = {
 	-- [types.Unpause] = ,
 	-- [types.PlayMedia] = ,
 	[types.SendMessage] = actionFunctions.SendMessage,
-	-- [types.Victory] = ,
-	-- [types.Defeat] = ,
+	[types.Victory] = actionFunctions.Victory,
+	[types.Defeat] = actionFunctions.Defeat,
+
+	-- Added for the private scripted-PvE mod:
+	[types.GiveResource]   = actionFunctions.GiveResource,
+	[types.FreezeTeam]     = actionFunctions.FreezeTeam,
+	[types.UnfreezeTeam]   = actionFunctions.UnfreezeTeam,
+	[types.SpawnBarrier]   = actionFunctions.SpawnBarrier,
+	[types.ExplodeBarrier] = actionFunctions.ExplodeBarrier,
 }
 
 -- unpack() does not handle optional parameters, as it cannot pass a value as nil
@@ -47,6 +54,11 @@ end
 local function invoke(actionId)
 	local type = actions[actionId].type
 	local actionFunction = typeMapping[type]
+
+	if not actionFunction then
+		Spring.Log('actions_dispatcher.lua', LOG.ERROR, "[Mission API] No handler for action '" .. tostring(actionId) .. "' (type " .. tostring(type) .. ") -- not implemented.")
+		return
+	end
 
 	actionFunction(unpackActionParameters(actionId))
 end
