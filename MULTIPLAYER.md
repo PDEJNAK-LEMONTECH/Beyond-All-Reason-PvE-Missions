@@ -8,7 +8,7 @@ The game content lives on your **fork**:
 
 ```
 https://github.com/PDEJNAK-LEMONTECH/Beyond-All-Reason-PvE-Missions
-branch: pve-missions      <- the tested mod. NOT master (master tracks upstream).
+branch: pve-missions      <- the tested mod AND the default branch. (master just tracks upstream.)
 ```
 
 Both players need a normal **vanilla BAR install** (for the Recoil engine + maps). We only add
@@ -66,15 +66,15 @@ will show up as **"Beyond All Reason $VERSION"** regardless of the folder name.)
 Steps (PowerShell):
 
 ```powershell
-# 1. Clone the fork straight into the engine's games dir, as an .sdd folder
+# 1. Clone the fork into the engine's games dir, as an .sdd folder.
+#    Its default branch is pve-missions (the tested mod), so the clone lands on it.
 $games = "$env:LOCALAPPDATA\Programs\Beyond-All-Reason\data\games"
 git clone --recurse-submodules `
   https://github.com/PDEJNAK-LEMONTECH/Beyond-All-Reason-PvE-Missions.git `
   "$games\BAR-PvE-Missions.sdd"
 
-# 2. Check out the tested branch + the exact submodule commit
+# 2. Make sure the submodule is at the pinned commit
 cd "$games\BAR-PvE-Missions.sdd"
-git checkout pve-missions
 git submodule update --init --recursive
 
 # 3. Enable dev games in the lobby (one empty marker file)
