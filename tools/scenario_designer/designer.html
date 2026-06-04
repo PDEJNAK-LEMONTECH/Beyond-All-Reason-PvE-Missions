@@ -118,6 +118,14 @@ window.addEventListener('unhandledrejection',function(e){ window.__err('promise 
         <div class="field"><label>Default difficulty</label>
           <select id="metaDifficulty"><option>easy</option><option selected>normal</option><option>hard</option></select>
         </div>
+        <div class="field"><label title="Engine 'deathmode' modoption: when an individual player/AI is eliminated (its units destroyed). Applies to ALL players including the human. For asymmetric per-side rules, pick 'Never' and drive it with Mission API Victory/Defeat actions.">When is a player/AI eliminated?</label>
+          <select id="metaDeathmode">
+            <option value="own_com" selected>When their own Commander dies (buildings included)</option>
+            <option value="killall">When all their units are destroyed</option>
+            <option value="com">Only when their whole alliance loses every Commander</option>
+            <option value="neverend">Never &mdash; Mission API Victory/Defeat decides</option>
+          </select>
+        </div>
       </section>
 
       <section class="panel">

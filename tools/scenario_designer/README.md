@@ -76,7 +76,21 @@ details (rather than failing silently).
    **Inspector**, and in a trigger tick the actions it should **fire**. Spatial parameters
    (x/z/radius, barrier endpoints) are editable both in the form and by dragging on the map.
 4. **Setup** (left panel) — choose which roles start **frozen** (dormant), and fill in title /
-   briefing / difficulty.
+   briefing / difficulty / **team defeat condition**.
+
+   The **"When is a player/AI eliminated?"** dropdown sets the engine's `deathmode` modoption per
+   scenario (baked into both the exported scenario-menu start script and the downloadable start
+   script). It controls when an *individual* player/AI is removed (its units destroyed) — and it
+   applies to **all** players, the human included:
+   - **When their own Commander dies** (`own_com`, **default**) — kill an AI's commander and *that
+     AI* is eliminated immediately, buildings and all, while any other commanders keep playing.
+     This is the classic "com death = you're out" rule most scenarios want.
+   - **When all their units are destroyed** (`killall`) — every last unit must die.
+   - **Only when their whole alliance loses every Commander** (`com`) — alliance-wide: a side
+     survives (buildings stay) until the *last* commander across its entire allyTeam dies. (This
+     is the engine's global default and the reason commander kills left buildings standing.)
+   - **Never** (`neverend`) — the engine never eliminates anyone; drive win/lose entirely with
+     Mission API `Victory`/`Defeat` actions. Use this for fully scripted or asymmetric rules.
 
 ### Saving / launching
 
