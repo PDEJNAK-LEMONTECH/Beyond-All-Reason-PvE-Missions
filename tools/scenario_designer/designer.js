@@ -70,7 +70,7 @@ const ACTION_SPEC = {
     {k:'team',t:'team',req:true,def:'ai1',teamKind:'side'},{k:'metal',t:'int'},{k:'energy',t:'int'} ] },
   SpawnBarrier:  { label:'Spawn barrier', spatial:'line', fields:[
     {k:'name',t:'str',req:true,help:'group name — reference this from an ExplodeBarrier action to blow it up'},
-    {k:'unitDefName',t:'unit',req:true,def:'armdrag'},{k:'team',t:'team',def:'',teamKind:'owner-gaia'},
+    {k:'unitDefName',t:'unit',req:true,def:'armfort'},{k:'team',t:'team',def:'',teamKind:'owner-gaia'},
     {k:'x1',t:'int',req:true},{k:'z1',t:'int',req:true},{k:'x2',t:'int',req:true},{k:'z2',t:'int',req:true},
     {k:'spacing',t:'int',def:40} ] },
   ExplodeBarrier:{ label:'Explode barrier', spatial:null, fields:[ {k:'name',t:'nameRef',req:true} ] },
@@ -390,7 +390,7 @@ function placeAt(wx,wz){
       if(!S._pendingBarrier){ S._pendingBarrier={x:wx,z:wz}; }
       else { const a=mkAction('SpawnBarrier');
         a.params.x1=S._pendingBarrier.x; a.params.z1=S._pendingBarrier.z; a.params.x2=wx; a.params.z2=wz;
-        a.params.unitDefName=S.build.def||'armdrag'; a.params.spacing=40;
+        a.params.unitDefName=S.build.def||'armfort'; a.params.spacing=40;
         S.actions.push(a); S._pendingBarrier=null; select('action',a.id); buildLists(); }
       break;
   }
