@@ -132,6 +132,23 @@ function Test-IsAdmin {
     return ([Security.Principal.WindowsPrincipal]$id).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
 }
 
+function Invoke-Git {
+    # Runs git and streams ALL output (incl. stderr progress) to the log without
+    # throwing. git writes normal progress like "Cloning into '...'" to stderr; with
+    # $ErrorActionPreference='Stop' + 2>&1 that becomes a terminating error, which
+    # would abort a perfectly good clone. We force Continue and judge success by the
+    # real exit code. Returns the process exit code.
+    param([string[]]$GitArgs, [scriptblock]$Logger)
+    $old = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        & git @GitArgs 2>&1 | ForEach-Object { & $Logger ($_.ToString()) }
+        return $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $old
+    }
+}
+
 function New-HostStartScript {
     param(
         [string]$HostName, [string]$FriendName, [int]$Port, [string]$MapName,
@@ -355,22 +372,29 @@ if ($cboEngine.Items.Count -gt 0) { $cboEngine.SelectedIndex = 0 }
 
 # ---- button handlers --------------------------------------------------------
 $btnClone.Add_Click({
+    $logger = { param($m) Write-Log $m }
     try {
         if (-not (Test-Path $CleanSdd)) {
             Write-Log "Cloning fork into $CleanSdd (one-time, may be large)..."
             $form.Cursor = 'WaitCursor'
-            git clone --branch $ForkBranch --recurse-submodules $ForkUrl $CleanSdd 2>&1 | ForEach-Object { Write-Log $_ }
+            $code = Invoke-Git @('clone','--branch',$ForkBranch,'--recurse-submodules',$ForkUrl,$CleanSdd) $logger
+            if ($code -ne 0) {
+                Write-Log "Clone failed (git exit $code). Removing partial folder so you can retry cleanly."
+                if (Test-Path $CleanSdd) { Remove-Item -Recurse -Force $CleanSdd -ErrorAction SilentlyContinue }
+                return
+            }
         } else {
             Write-Log "Syncing clean clone (git pull + submodule update)..."
             $form.Cursor = 'WaitCursor'
-            git -C $CleanSdd pull 2>&1 | ForEach-Object { Write-Log $_ }
-            git -C $CleanSdd submodule update --init --recursive 2>&1 | ForEach-Object { Write-Log $_ }
+            [void](Invoke-Git @('-C',$CleanSdd,'pull') $logger)
+            [void](Invoke-Git @('-C',$CleanSdd,'submodule','update','--init','--recursive') $logger)
         }
         $dev = Join-Path $BarRoot 'devmode.txt'
         if (-not (Test-Path $dev)) { New-Item -ItemType File -Force $dev | Out-Null; Write-Log 'Wrote devmode.txt' }
         Update-CloneStatus
         Reload-Scenarios
-        Write-Log 'Clone ready.'
+        $head = (& git -C $CleanSdd rev-parse --short HEAD 2>$null)
+        Write-Log "Clone ready @ $head."
     } catch {
         Write-Log "ERROR: $($_.Exception.Message)"
     } finally { $form.Cursor = 'Default' }
