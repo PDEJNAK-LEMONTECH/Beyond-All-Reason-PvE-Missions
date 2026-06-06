@@ -2,7 +2,7 @@
 -- Map: Ancient Vault v1.4  (10240x15360)
 -- Edit/iterate in-game with /luarules reload (logic-only changes).
 --[==[ SCENARIO_DESIGNER_V1
-{"v":1,"map":{"file":"ancient_vault_v1.4.sd7","name":"Ancient Vault v1.4","w":10240,"h":15360,"thumb":"maps/ancient_vault_v1.4.jpg"},"meta":{"title":"New Scenario","author":"","summary":"","briefing":"","difficulty":"normal","deathmode":"own_com","missionFile":"ancient_vault_v1_4_mission","scenarioIndex":26},"playerStart":{"x":4192,"z":11342},"aiStarts":[{"x":5179,"z":8516},{"x":5260,"z":5730},{"x":5191,"z":2398}],"aiCount":3,"freeze":["ai3"],"buildings":[{"id":"e1","def":"armmex","x":5266,"z":8320,"facing":"","role":"ai1"},{"id":"e2","def":"armmex","x":4903,"z":8708,"facing":"","role":"ai1"},{"id":"e3","def":"armmex","x":3830,"z":8241,"facing":"","role":"ai1"},{"id":"e4","def":"armmex","x":6424,"z":8245,"facing":"","role":"ai1"},{"id":"e5","def":"armlab","x":5803,"z":8725,"facing":"","role":"ai1"},{"id":"e6","def":"corjamt","x":3978,"z":11656,"facing":"","role":"humans"},{"id":"e7","def":"corhlt","x":3045,"z":10748,"facing":"","role":"humans"},{"id":"e8","def":"corhlt","x":4218,"z":10794,"facing":"","role":"humans"},{"id":"e9","def":"corhlt","x":5582,"z":11143,"facing":"","role":"humans"},{"id":"e19","def":"armestor","x":5448,"z":963,"facing":"","role":"ai3"},{"id":"e20","def":"cormstor","x":4666,"z":999,"facing":"","role":"humans"},{"id":"e21","def":"armavp","x":5598,"z":1760,"facing":"","role":"humans"},{"id":"e22","def":"armmoho","x":2376,"z":737,"facing":"","role":"ai3"},{"id":"e23","def":"armmoho","x":2937,"z":857,"facing":"","role":"ai3"},{"id":"e24","def":"armmoho","x":3293,"z":620,"facing":"","role":"ai3"},{"id":"e25","def":"armmoho","x":3681,"z":192,"facing":"","role":"ai3"},{"id":"e26","def":"armmoho","x":6553,"z":205,"facing":"","role":"humans"},{"id":"e27","def":"armmoho","x":6865,"z":593,"facing":"","role":"ai3"},{"id":"e28","def":"armmoho","x":7192,"z":1061,"facing":"","role":"humans"},{"id":"e29","def":"armmoho","x":7983,"z":791,"facing":"","role":"humans"},{"id":"e30","def":"armafus","x":3645,"z":1471,"facing":"","role":"ai3"},{"id":"e31","def":"armafus","x":3632,"z":1756,"facing":"","role":"ai3"},{"id":"e32","def":"armrad","x":6438,"z":3230,"facing":"","role":"ai3"},{"id":"e33","def":"armrad","x":3689,"z":3312,"facing":"","role":"ai3"},{"id":"e35","def":"armfido","x":3885,"z":10578,"facing":"","role":"humans"},{"id":"e36","def":"armfido","x":3721,"z":10583,"facing":"","role":"humans"},{"id":"e37","def":"armfido","x":3838,"z":10419,"facing":"","role":"humans"},{"id":"e38","def":"armfido","x":4262,"z":10560,"facing":"","role":"humans"},{"id":"e39","def":"armfido","x":4403,"z":10607,"facing":"","role":"humans"},{"id":"e40","def":"armfido","x":4068,"z":10478,"facing":"","role":"humans"},{"id":"e41","def":"armfido","x":3991,"z":10507,"facing":"","role":"humans"},{"id":"e42","def":"armfido","x":3897,"z":10507,"facing":"","role":"humans"},{"id":"e43","def":"armfido","x":3780,"z":10495,"facing":"","role":"humans"},{"id":"e44","def":"armfido","x":3721,"z":10472,"facing":"","role":"humans"},{"id":"e45","def":"armfido","x":3697,"z":10431,"facing":"","role":"humans"},{"id":"e46","def":"armfido","x":3685,"z":10401,"facing":"","role":"humans"},{"id":"e47","def":"armfido","x":3885,"z":10372,"facing":"","role":"humans"},{"id":"e48","def":"armfido","x":4162,"z":10389,"facing":"","role":"humans"},{"id":"e49","def":"armfido","x":4256,"z":10395,"facing":"","role":"humans"},{"id":"e50","def":"armfido","x":4344,"z":10395,"facing":"","role":"humans"},{"id":"e51","def":"armfido","x":4303,"z":10342,"facing":"","role":"humans"},{"id":"e52","def":"armfido","x":4138,"z":10289,"facing":"","role":"humans"},{"id":"e53","def":"armfido","x":3980,"z":10307,"facing":"","role":"humans"},{"id":"e54","def":"armfido","x":3927,"z":10313,"facing":"","role":"humans"},{"id":"e55","def":"armfido","x":3709,"z":10272,"facing":"","role":"humans"},{"id":"e56","def":"armfido","x":3644,"z":10260,"facing":"","role":"humans"},{"id":"e57","def":"armfido","x":3662,"z":10189,"facing":"","role":"humans"},{"id":"e58","def":"armfido","x":3921,"z":10236,"facing":"","role":"humans"},{"id":"e59","def":"armfido","x":4185,"z":10207,"facing":"","role":"humans"},{"id":"e60","def":"armfido","x":4450,"z":10283,"facing":"","role":"humans"},{"id":"e61","def":"armfido","x":4268,"z":10178,"facing":"","role":"humans"},{"id":"e62","def":"armfido","x":4138,"z":10142,"facing":"","role":"humans"},{"id":"e63","def":"armfido","x":4074,"z":10136,"facing":"","role":"humans"},{"id":"e64","def":"armfido","x":3856,"z":10154,"facing":"","role":"humans"},{"id":"e65","def":"armfido","x":3809,"z":10148,"facing":"","role":"humans"},{"id":"e66","def":"armfido","x":3727,"z":10131,"facing":"","role":"humans"},{"id":"e67","def":"armfido","x":3633,"z":10201,"facing":"","role":"humans"},{"id":"e68","def":"armfido","x":3574,"z":10301,"facing":"","role":"humans"},{"id":"e69","def":"armfido","x":3685,"z":10331,"facing":"","role":"humans"},{"id":"e70","def":"armfido","x":4215,"z":10295,"facing":"","role":"humans"},{"id":"e71","def":"armfido","x":4409,"z":10283,"facing":"","role":"humans"},{"id":"e72","def":"armfido","x":4603,"z":10278,"facing":"","role":"humans"},{"id":"e73","def":"armfido","x":4615,"z":10254,"facing":"","role":"humans"},{"id":"e74","def":"armfido","x":4515,"z":10172,"facing":"","role":"humans"},{"id":"e75","def":"armfido","x":4380,"z":10148,"facing":"","role":"humans"},{"id":"e76","def":"armfido","x":4015,"z":10142,"facing":"","role":"humans"}],"triggers":[{"kind":"trigger","id":"e13","name":"Team destroyed","type":"TeamDestroyed","settings":{"repeating":false},"params":{"team":"ai1"},"actions":["e15","e18","e17","e16"]},{"kind":"trigger","id":"e77","name":"Time elapsed","type":"TimeElapsed","settings":{"repeating":false},"params":{"gameFrame":1},"actions":["e10","e11","e12"]}],"actions":[{"kind":"action","id":"e10","name":"Spawn barrier","type":"SpawnBarrier","params":{"unitDefName":"corfort","team":"","spacing":40,"name":"spawn_barrier","x1":0,"z1":7126,"x2":10240,"z2":6812}},{"kind":"action","id":"e11","name":"Spawn barrier 2","type":"SpawnBarrier","params":{"unitDefName":"corfort","team":"","spacing":40,"name":"spawn_barrier_2","x1":10213,"z1":6650,"x2":31,"z2":6998}},{"kind":"action","id":"e12","name":"Spawn barrier 3","type":"SpawnBarrier","params":{"unitDefName":"corfort","team":"","spacing":40,"name":"spawn_barrier_3","x1":35,"z1":4066,"x2":10204,"z2":4086}},{"kind":"action","id":"e15","name":"Spawn units AI2","type":"SpawnUnits","params":{"quantity":13,"team":"ai2","name":"spawn_units_2","x":5128,"z":7133,"unitDefName":"armwar"}},{"kind":"action","id":"e16","name":"Explode barrier","type":"ExplodeBarrier","params":{"name":"spawn_barrier"}},{"kind":"action","id":"e17","name":"Explode barrier 2","type":"ExplodeBarrier","params":{"name":"spawn_barrier_2"}},{"kind":"action","id":"e18","name":"Unfreeze team","type":"UnfreezeTeam","params":{"team":"ai3","metal":500,"energy":1000}}],"nextId":80}
+{"v":1,"map":{"file":"ancient_vault_v1.4.sd7","name":"Ancient Vault v1.4","w":10240,"h":15360,"thumb":"maps/ancient_vault_v1.4.jpg"},"meta":{"title":"New Scenario","author":"","summary":"","briefing":"","difficulty":"normal","deathmode":"own_com","missionFile":"ancient_vault_v1_4_mission","scenarioIndex":26},"playerStart":null,"aiStarts":[{"x":4315,"z":9119},{"x":4010,"z":5120},{"x":5090,"z":2247}],"aiCount":3,"freeze":["ai3"],"buildings":[{"id":"e78","def":"armmoho","x":3077,"z":8854,"facing":"","role":"ai1"},{"id":"e79","def":"armmoho","x":4891,"z":8695,"facing":"","role":"ai1"},{"id":"e80","def":"armlab","x":3821,"z":8816,"facing":"","role":"ai1"},{"id":"e81","def":"armhlt","x":3061,"z":9016,"facing":"","role":"ai1"},{"id":"e82","def":"armhlt","x":3832,"z":8987,"facing":"","role":"ai1"},{"id":"e83","def":"armhlt","x":4898,"z":8883,"facing":"","role":"ai1"},{"id":"e85","def":"armmex","x":570,"z":474,"facing":"","role":"ai3"},{"id":"e86","def":"armmex","x":727,"z":202,"facing":"","role":"ai3"},{"id":"e87","def":"armmex","x":1282,"z":386,"facing":"","role":"ai3"},{"id":"e88","def":"armmex","x":1921,"z":230,"facing":"","role":"ai3"},{"id":"e89","def":"armmex","x":2176,"z":162,"facing":"","role":"ai3"},{"id":"e90","def":"armmex","x":2387,"z":727,"facing":"","role":"ai3"},{"id":"e91","def":"armmex","x":2911,"z":844,"facing":"","role":"ai3"},{"id":"e92","def":"armmex","x":3311,"z":621,"facing":"","role":"ai3"},{"id":"e93","def":"armmex","x":3646,"z":180,"facing":"","role":"ai3"},{"id":"e96","def":"armfus","x":2725,"z":367,"facing":"","role":"ai3"}],"triggers":[{"kind":"trigger","id":"e13","name":"Team destroyed","type":"TeamDestroyed","settings":{"repeating":false},"params":{"team":"ai1"},"actions":["e18","e17","e16","e84","e94","e95","e97"]},{"kind":"trigger","id":"e77","name":"Time elapsed","type":"TimeElapsed","settings":{"repeating":false},"params":{"gameFrame":1},"actions":["e10","e11","e12"]}],"actions":[{"kind":"action","id":"e10","name":"Spawn barrier","type":"SpawnBarrier","params":{"unitDefName":"corfort","team":"","spacing":40,"name":"spawn_barrier","x1":35,"z1":8478,"x2":10188,"z2":8506}},{"kind":"action","id":"e11","name":"Spawn barrier 2","type":"SpawnBarrier","params":{"unitDefName":"corfort","team":"","spacing":40,"name":"spawn_barrier_2","x1":10240,"z1":8432,"x2":0,"z2":8358}},{"kind":"action","id":"e12","name":"Spawn barrier 3","type":"SpawnBarrier","params":{"unitDefName":"corfort","team":"","spacing":40,"name":"spawn_barrier_3","x1":35,"z1":4066,"x2":10204,"z2":4086}},{"kind":"action","id":"e16","name":"Explode barrier","type":"ExplodeBarrier","params":{"name":"spawn_barrier"}},{"kind":"action","id":"e17","name":"Explode barrier 2","type":"ExplodeBarrier","params":{"name":"spawn_barrier_2"}},{"kind":"action","id":"e18","name":"Unfreeze team","type":"UnfreezeTeam","params":{"team":"ai3","metal":500,"energy":1000}},{"kind":"action","id":"e84","name":"Spawn units for AI 2","type":"SpawnUnits","params":{"quantity":20,"team":"ai2","name":"spawn_units_ai_2","x":4465,"z":5252,"unitDefName":"armstil"}},{"kind":"action","id":"e94","name":"Spawn units for Humans 1","type":"SpawnUnits","params":{"quantity":6,"team":"humans","name":"spawn_units_for_humans_1","x":4723,"z":11430,"unitDefName":"armck"}},{"kind":"action","id":"e95","name":"Spawn units for humans 2","type":"SpawnUnits","params":{"quantity":25,"team":"humans","name":"spawn_units_for_humans_2","x":5570,"z":11465,"unitDefName":"armrectr"}},{"kind":"action","id":"e97","name":"Spawn units for humans 3","type":"SpawnUnits","params":{"quantity":10,"team":"ai1","name":"spawn_units_for_humans_3","x":4043,"z":11435,"unitDefName":"cormort"}}],"nextId":98}
 ]==]
 
 local triggerTypes = GG['MissionAPI'].TriggerTypes
@@ -13,83 +13,30 @@ local Teams = { humans = { allyTeam = 0 }, enemies = { allyTeam = 1 } }
 local Setup = {
 	freeze = { "ai3" },
 	startPositions = {
-		{ role = "humans", x = 4192, z = 11342 },
-		{ role = "ai1", x = 5179, z = 8516 },
-		{ role = "ai2", x = 5260, z = 5730 },
-		{ role = "ai3", x = 5191, z = 2398 },
+		{ role = "ai1", x = 4315, z = 9119 },
+		{ role = "ai2", x = 4010, z = 5120 },
+		{ role = "ai3", x = 5090, z = 2247 },
 	},
 	bases = {
 		ai1 = {
-			{ def = "armmex", x = 5266, z = 8320 },
-			{ def = "armmex", x = 4903, z = 8708 },
-			{ def = "armmex", x = 3830, z = 8241 },
-			{ def = "armmex", x = 6424, z = 8245 },
-			{ def = "armlab", x = 5803, z = 8725 },
-		},
-		humans = {
-			{ def = "corjamt", x = 3978, z = 11656 },
-			{ def = "corhlt", x = 3045, z = 10748 },
-			{ def = "corhlt", x = 4218, z = 10794 },
-			{ def = "corhlt", x = 5582, z = 11143 },
-			{ def = "cormstor", x = 4666, z = 999 },
-			{ def = "armavp", x = 5598, z = 1760 },
-			{ def = "armmoho", x = 6553, z = 205 },
-			{ def = "armmoho", x = 7192, z = 1061 },
-			{ def = "armmoho", x = 7983, z = 791 },
-			{ def = "armfido", x = 3885, z = 10578 },
-			{ def = "armfido", x = 3721, z = 10583 },
-			{ def = "armfido", x = 3838, z = 10419 },
-			{ def = "armfido", x = 4262, z = 10560 },
-			{ def = "armfido", x = 4403, z = 10607 },
-			{ def = "armfido", x = 4068, z = 10478 },
-			{ def = "armfido", x = 3991, z = 10507 },
-			{ def = "armfido", x = 3897, z = 10507 },
-			{ def = "armfido", x = 3780, z = 10495 },
-			{ def = "armfido", x = 3721, z = 10472 },
-			{ def = "armfido", x = 3697, z = 10431 },
-			{ def = "armfido", x = 3685, z = 10401 },
-			{ def = "armfido", x = 3885, z = 10372 },
-			{ def = "armfido", x = 4162, z = 10389 },
-			{ def = "armfido", x = 4256, z = 10395 },
-			{ def = "armfido", x = 4344, z = 10395 },
-			{ def = "armfido", x = 4303, z = 10342 },
-			{ def = "armfido", x = 4138, z = 10289 },
-			{ def = "armfido", x = 3980, z = 10307 },
-			{ def = "armfido", x = 3927, z = 10313 },
-			{ def = "armfido", x = 3709, z = 10272 },
-			{ def = "armfido", x = 3644, z = 10260 },
-			{ def = "armfido", x = 3662, z = 10189 },
-			{ def = "armfido", x = 3921, z = 10236 },
-			{ def = "armfido", x = 4185, z = 10207 },
-			{ def = "armfido", x = 4450, z = 10283 },
-			{ def = "armfido", x = 4268, z = 10178 },
-			{ def = "armfido", x = 4138, z = 10142 },
-			{ def = "armfido", x = 4074, z = 10136 },
-			{ def = "armfido", x = 3856, z = 10154 },
-			{ def = "armfido", x = 3809, z = 10148 },
-			{ def = "armfido", x = 3727, z = 10131 },
-			{ def = "armfido", x = 3633, z = 10201 },
-			{ def = "armfido", x = 3574, z = 10301 },
-			{ def = "armfido", x = 3685, z = 10331 },
-			{ def = "armfido", x = 4215, z = 10295 },
-			{ def = "armfido", x = 4409, z = 10283 },
-			{ def = "armfido", x = 4603, z = 10278 },
-			{ def = "armfido", x = 4615, z = 10254 },
-			{ def = "armfido", x = 4515, z = 10172 },
-			{ def = "armfido", x = 4380, z = 10148 },
-			{ def = "armfido", x = 4015, z = 10142 },
+			{ def = "armmoho", x = 3077, z = 8854 },
+			{ def = "armmoho", x = 4891, z = 8695 },
+			{ def = "armlab", x = 3821, z = 8816 },
+			{ def = "armhlt", x = 3061, z = 9016 },
+			{ def = "armhlt", x = 3832, z = 8987 },
+			{ def = "armhlt", x = 4898, z = 8883 },
 		},
 		ai3 = {
-			{ def = "armestor", x = 5448, z = 963 },
-			{ def = "armmoho", x = 2376, z = 737 },
-			{ def = "armmoho", x = 2937, z = 857 },
-			{ def = "armmoho", x = 3293, z = 620 },
-			{ def = "armmoho", x = 3681, z = 192 },
-			{ def = "armmoho", x = 6865, z = 593 },
-			{ def = "armafus", x = 3645, z = 1471 },
-			{ def = "armafus", x = 3632, z = 1756 },
-			{ def = "armrad", x = 6438, z = 3230 },
-			{ def = "armrad", x = 3689, z = 3312 },
+			{ def = "armmex", x = 570, z = 474 },
+			{ def = "armmex", x = 727, z = 202 },
+			{ def = "armmex", x = 1282, z = 386 },
+			{ def = "armmex", x = 1921, z = 230 },
+			{ def = "armmex", x = 2176, z = 162 },
+			{ def = "armmex", x = 2387, z = 727 },
+			{ def = "armmex", x = 2911, z = 844 },
+			{ def = "armmex", x = 3311, z = 621 },
+			{ def = "armmex", x = 3646, z = 180 },
+			{ def = "armfus", x = 2725, z = 367 },
 		},
 	},
 }
@@ -99,7 +46,7 @@ local Triggers = {
 		type = triggerTypes.TeamDestroyed,
 		settings = { repeating = false },
 		parameters = { team = "ai1" },
-		actions = { "SpawnunitsAI2", "Unfreezeteam", "Explodebarrier2", "Explodebarrier" },
+		actions = { "Unfreezeteam", "Explodebarrier2", "Explodebarrier", "SpawnunitsforAI2", "SpawnunitsforHumans1", "Spawnunitsforhumans2", "Spawnunitsforhumans3" },
 	},
 	Timeelapsed = {
 		type = triggerTypes.TimeElapsed,
@@ -112,19 +59,15 @@ local Triggers = {
 local Actions = {
 	Spawnbarrier = {
 		type = actionTypes.SpawnBarrier,
-		parameters = { name = "spawn_barrier", unitDefName = "corfort", x1 = 0, z1 = 7126, x2 = 10240, z2 = 6812, spacing = 40 },
+		parameters = { name = "spawn_barrier", unitDefName = "corfort", x1 = 35, z1 = 8478, x2 = 10188, z2 = 8506, spacing = 40 },
 	},
 	Spawnbarrier2 = {
 		type = actionTypes.SpawnBarrier,
-		parameters = { name = "spawn_barrier_2", unitDefName = "corfort", x1 = 10213, z1 = 6650, x2 = 31, z2 = 6998, spacing = 40 },
+		parameters = { name = "spawn_barrier_2", unitDefName = "corfort", x1 = 10240, z1 = 8432, x2 = 0, z2 = 8358, spacing = 40 },
 	},
 	Spawnbarrier3 = {
 		type = actionTypes.SpawnBarrier,
 		parameters = { name = "spawn_barrier_3", unitDefName = "corfort", x1 = 35, z1 = 4066, x2 = 10204, z2 = 4086, spacing = 40 },
-	},
-	SpawnunitsAI2 = {
-		type = actionTypes.SpawnUnits,
-		parameters = { name = "spawn_units_2", unitDefName = "armwar", quantity = 13, x = 5128, z = 7133, team = "ai2" },
 	},
 	Explodebarrier = {
 		type = actionTypes.ExplodeBarrier,
@@ -137,6 +80,22 @@ local Actions = {
 	Unfreezeteam = {
 		type = actionTypes.UnfreezeTeam,
 		parameters = { team = "ai3", metal = 500, energy = 1000 },
+	},
+	SpawnunitsforAI2 = {
+		type = actionTypes.SpawnUnits,
+		parameters = { name = "spawn_units_ai_2", unitDefName = "armstil", quantity = 20, x = 4465, z = 5252, team = "ai2" },
+	},
+	SpawnunitsforHumans1 = {
+		type = actionTypes.SpawnUnits,
+		parameters = { name = "spawn_units_for_humans_1", unitDefName = "armck", quantity = 6, x = 4723, z = 11430, team = "humans" },
+	},
+	Spawnunitsforhumans2 = {
+		type = actionTypes.SpawnUnits,
+		parameters = { name = "spawn_units_for_humans_2", unitDefName = "armrectr", quantity = 25, x = 5570, z = 11465, team = "humans" },
+	},
+	Spawnunitsforhumans3 = {
+		type = actionTypes.SpawnUnits,
+		parameters = { name = "spawn_units_for_humans_3", unitDefName = "cormort", quantity = 10, x = 4043, z = 11435, team = "ai1" },
 	},
 }
 
