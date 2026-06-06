@@ -14,6 +14,27 @@ branch: pve-missions      <- the tested mod AND the default branch. (master just
 Both players need a normal **vanilla BAR install** (for the Recoil engine + maps). We only add
 this repo as an extra "dev game" beside it. No engine build, no second download of the engine.
 
+> **Heads-up — the official BAR lobby cannot serve this mod.** Chobby only connects to BAR's
+> central servers, which run the *published* game; the `!lock` "private game" is still vanilla on an
+> official autohost, and our local `.sdd` would **desync** against it. So we host **directly by IP**
+> (engine start scripts), not through the lobby. Everything below is that direct path.
+
+---
+
+## Quick start (GUI host + one-command friend join)
+
+For the common case (you host on Windows, your friend joins), skip the manual steps below:
+
+- **You (host):** double-click **`tools/multiplayer/host_launcher.cmd`**. It creates the clean clone,
+  lists your scenarios (map + AI count auto-detected), opens the firewall, shows your public IP, and
+  launches the match. See `tools/multiplayer/README.md`.
+- **Your friend:** send them **`tools/multiplayer/FRIEND_AGENT_SETUP.md`** — a self-contained brief
+  their coding agent (Gemini/Claude/etc.) follows to clone the fork, match the engine, download the
+  map, and build a `join.cmd`. At game time they run `join.cmd <your-ip> <port>`.
+
+The sections below are the detailed manual reference (and the Linux-dedicated option), in case you
+want to do it by hand or understand what the launcher does.
+
 ---
 
 ## 0. The one rule that controls everything: SYNC
