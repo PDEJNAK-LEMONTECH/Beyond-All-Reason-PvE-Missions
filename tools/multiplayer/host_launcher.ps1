@@ -22,6 +22,16 @@ $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
+# Mark this process DPI-aware BEFORE any window is created. Without this, Windows
+# bitmap-stretches the whole (DPI-unaware) window on scaled displays (125%/150%/...),
+# which crops/overlaps controls and truncates text to just its tail end.
+Add-Type -Name NativeDpi -Namespace BarPve -MemberDefinition '
+    [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
+'
+[void][BarPve.NativeDpi]::SetProcessDPIAware()
+[System.Windows.Forms.Application]::EnableVisualStyles()
+[System.Windows.Forms.Application]::SetCompatibleTextRenderingDefault($false)
+
 # ---- paths ------------------------------------------------------------------
 $BarRoot   = Join-Path $env:LOCALAPPDATA 'Programs\Beyond-All-Reason'
 $DataDir   = Join-Path $BarRoot 'data'
@@ -203,118 +213,122 @@ function New-HostStartScript {
 # ============================================================================
 $form = New-Object System.Windows.Forms.Form
 $form.Text = 'BAR PvE -- Host a match for a friend'
-$form.Size = New-Object System.Drawing.Size(660, 660)
+$form.Size = New-Object System.Drawing.Size(940, 900)
 $form.StartPosition = 'CenterScreen'
 $form.FormBorderStyle = 'FixedSingle'
 $form.MaximizeBox = $false
 
-$font = New-Object System.Drawing.Font('Segoe UI', 9)
+$font = New-Object System.Drawing.Font('Segoe UI', 10)
 $form.Font = $font
 
-function New-Label([string]$text,[int]$x,[int]$y,[int]$w=180) {
+function New-Label([string]$text,[int]$x,[int]$y,[int]$w=220) {
     $l = New-Object System.Windows.Forms.Label
     $l.Text = $text; $l.Location = New-Object System.Drawing.Point($x,$y)
-    $l.Size = New-Object System.Drawing.Size($w,22); $form.Controls.Add($l); return $l
+    $l.Size = New-Object System.Drawing.Size($w,26); $form.Controls.Add($l); return $l
 }
 
-$y = 12
-New-Label 'Clean clone (host from here):' 12 $y 200 | Out-Null
-$lblClone = New-Label '' 215 $y 420
+$margin = 24
+$y = 20
+New-Label 'Clean clone (host from here):' $margin $y 700 | Out-Null
+$y += 28
+$lblClone = New-Label '' ($margin + 12) $y 880
+$lblClone.Size = New-Object System.Drawing.Size(880, 40)
 $lblClone.ForeColor = [System.Drawing.Color]::DimGray
-$y += 26
+$y += 48
 
 $btnClone = New-Object System.Windows.Forms.Button
 $btnClone.Text = 'Create / Sync clone'
-$btnClone.Location = New-Object System.Drawing.Point(12, $y)
-$btnClone.Size = New-Object System.Drawing.Size(150, 26)
+$btnClone.Location = New-Object System.Drawing.Point($margin, $y)
+$btnClone.Size = New-Object System.Drawing.Size(200, 34)
 $form.Controls.Add($btnClone)
-$y += 38
+$y += 56
 
-New-Label 'Scenario:' 12 $y | Out-Null
+New-Label 'Scenario:' $margin $y 140 | Out-Null
 $cboScenario = New-Object System.Windows.Forms.ComboBox
-$cboScenario.Location = New-Object System.Drawing.Point(120, $y)
-$cboScenario.Size = New-Object System.Drawing.Size(510, 24)
+$cboScenario.Location = New-Object System.Drawing.Point(170, $y)
+$cboScenario.Size = New-Object System.Drawing.Size(730, 28)
 $cboScenario.DropDownStyle = 'DropDownList'
 $form.Controls.Add($cboScenario)
-$y += 30
+$y += 40
 
-$lblScenInfo = New-Label '' 120 $y 510
-$lblScenInfo.Size = New-Object System.Drawing.Size(510, 36)
+$lblScenInfo = New-Label '' 170 $y 730
+$lblScenInfo.Size = New-Object System.Drawing.Size(730, 44)
 $lblScenInfo.ForeColor = [System.Drawing.Color]::DimGray
-$y += 42
+$y += 58
 
-New-Label 'Map:' 12 $y | Out-Null
+New-Label 'Map:' $margin $y 140 | Out-Null
 $cboMap = New-Object System.Windows.Forms.ComboBox
-$cboMap.Location = New-Object System.Drawing.Point(120, $y)
-$cboMap.Size = New-Object System.Drawing.Size(510, 24)
+$cboMap.Location = New-Object System.Drawing.Point(170, $y)
+$cboMap.Size = New-Object System.Drawing.Size(730, 28)
 $cboMap.DropDownStyle = 'DropDownList'
 $form.Controls.Add($cboMap)
-$y += 36
+$y += 50
 
-New-Label 'Your name:' 12 $y | Out-Null
+New-Label 'Your name:' $margin $y 140 | Out-Null
 $txtHost = New-Object System.Windows.Forms.TextBox
-$txtHost.Location = New-Object System.Drawing.Point(120, $y); $txtHost.Size = New-Object System.Drawing.Size(200,24)
+$txtHost.Location = New-Object System.Drawing.Point(170, $y); $txtHost.Size = New-Object System.Drawing.Size(280,28)
 $txtHost.Text = 'Dejnol'; $form.Controls.Add($txtHost)
-New-Label "Friend's name:" 340 $y 90 | Out-Null
+New-Label "Friend's name:" 480 $y 140 | Out-Null
 $txtFriend = New-Object System.Windows.Forms.TextBox
-$txtFriend.Location = New-Object System.Drawing.Point(435, $y); $txtFriend.Size = New-Object System.Drawing.Size(195,24)
+$txtFriend.Location = New-Object System.Drawing.Point(620, $y); $txtFriend.Size = New-Object System.Drawing.Size(280,28)
 $form.Controls.Add($txtFriend)
-$y += 34
+$y += 50
 
-New-Label 'UDP port:' 12 $y | Out-Null
+New-Label 'UDP port:' $margin $y 140 | Out-Null
 $txtPort = New-Object System.Windows.Forms.TextBox
-$txtPort.Location = New-Object System.Drawing.Point(120, $y); $txtPort.Size = New-Object System.Drawing.Size(90,24)
+$txtPort.Location = New-Object System.Drawing.Point(170, $y); $txtPort.Size = New-Object System.Drawing.Size(120,28)
 $txtPort.Text = '8452'; $form.Controls.Add($txtPort)
-New-Label 'Difficulty:' 240 $y 70 | Out-Null
+New-Label 'Difficulty:' 340 $y 110 | Out-Null
 $cboDiff = New-Object System.Windows.Forms.ComboBox
-$cboDiff.Location = New-Object System.Drawing.Point(315, $y); $cboDiff.Size = New-Object System.Drawing.Size(120,24)
+$cboDiff.Location = New-Object System.Drawing.Point(450, $y); $cboDiff.Size = New-Object System.Drawing.Size(160,28)
 $cboDiff.DropDownStyle = 'DropDownList'
 [void]$cboDiff.Items.AddRange(@('beginner','normal','hard')); $cboDiff.SelectedItem = 'normal'
 $form.Controls.Add($cboDiff)
-$y += 34
+$y += 50
 
-New-Label 'Eliminate when:' 12 $y 100 | Out-Null
+New-Label 'Eliminate when:' $margin $y 140 | Out-Null
 $cboDeath = New-Object System.Windows.Forms.ComboBox
-$cboDeath.Location = New-Object System.Drawing.Point(120, $y); $cboDeath.Size = New-Object System.Drawing.Size(170,24)
+$cboDeath.Location = New-Object System.Drawing.Point(170, $y); $cboDeath.Size = New-Object System.Drawing.Size(220,28)
 $cboDeath.DropDownStyle = 'DropDownList'
 [void]$cboDeath.Items.AddRange(@('own_com','com','killall','neverend')); $cboDeath.SelectedItem = 'own_com'
 $form.Controls.Add($cboDeath)
 $chkLos = New-Object System.Windows.Forms.CheckBox
-$chkLos.Text = 'Infinite LOS (debug)'; $chkLos.Location = New-Object System.Drawing.Point(315, $y)
-$chkLos.Size = New-Object System.Drawing.Size(180,24); $form.Controls.Add($chkLos)
-$y += 34
+$chkLos.Text = 'Infinite LOS (debug)'; $chkLos.Location = New-Object System.Drawing.Point(420, $y)
+$chkLos.Size = New-Object System.Drawing.Size(260,28); $form.Controls.Add($chkLos)
+$y += 50
 
-New-Label 'Engine:' 12 $y | Out-Null
+New-Label 'Engine:' $margin $y 140 | Out-Null
 $cboEngine = New-Object System.Windows.Forms.ComboBox
-$cboEngine.Location = New-Object System.Drawing.Point(120, $y); $cboEngine.Size = New-Object System.Drawing.Size(300,24)
+$cboEngine.Location = New-Object System.Drawing.Point(170, $y); $cboEngine.Size = New-Object System.Drawing.Size(400,28)
 $cboEngine.DropDownStyle = 'DropDownList'
 $form.Controls.Add($cboEngine)
-$y += 40
+$y += 62
 
 $btnNet = New-Object System.Windows.Forms.Button
 $btnNet.Text = 'Prep network (firewall + show my IP)'
-$btnNet.Location = New-Object System.Drawing.Point(12, $y); $btnNet.Size = New-Object System.Drawing.Size(280,30)
+$btnNet.Location = New-Object System.Drawing.Point($margin, $y); $btnNet.Size = New-Object System.Drawing.Size(380,42)
 $form.Controls.Add($btnNet)
 
 $btnHost = New-Object System.Windows.Forms.Button
 $btnHost.Text = 'Host & Play'
-$btnHost.Location = New-Object System.Drawing.Point(470, $y); $btnHost.Size = New-Object System.Drawing.Size(160,30)
-$btnHost.Font = New-Object System.Drawing.Font('Segoe UI', 10, [System.Drawing.FontStyle]::Bold)
+$btnHost.Location = New-Object System.Drawing.Point(660, $y); $btnHost.Size = New-Object System.Drawing.Size(240,42)
+$btnHost.Font = New-Object System.Drawing.Font('Segoe UI', 11, [System.Drawing.FontStyle]::Bold)
 $form.Controls.Add($btnHost)
-$y += 38
+$y += 60
 
 $lblIP = New-Object System.Windows.Forms.Label
-$lblIP.Location = New-Object System.Drawing.Point(12, $y); $lblIP.Size = New-Object System.Drawing.Size(620,26)
-$lblIP.Font = New-Object System.Drawing.Font('Consolas', 11, [System.Drawing.FontStyle]::Bold)
+$lblIP.Location = New-Object System.Drawing.Point($margin, $y); $lblIP.Size = New-Object System.Drawing.Size(880,30)
+$lblIP.Font = New-Object System.Drawing.Font('Consolas', 12, [System.Drawing.FontStyle]::Bold)
 $lblIP.ForeColor = [System.Drawing.Color]::DarkGreen
 $form.Controls.Add($lblIP)
-$y += 30
+$y += 42
 
 $log = New-Object System.Windows.Forms.TextBox
-$log.Location = New-Object System.Drawing.Point(12, $y)
-$log.Size = New-Object System.Drawing.Size(620, 160)
+$log.Location = New-Object System.Drawing.Point($margin, $y)
+$log.Size = New-Object System.Drawing.Size(880, 220)
 $log.Multiline = $true; $log.ReadOnly = $true; $log.ScrollBars = 'Vertical'
 $log.BackColor = [System.Drawing.Color]::White
+$log.Font = New-Object System.Drawing.Font('Consolas', 9.5)
 $form.Controls.Add($log)
 
 function Write-Log([string]$m) { $log.AppendText(("{0}`r`n" -f $m)) }
